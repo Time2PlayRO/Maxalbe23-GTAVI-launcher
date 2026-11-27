@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>maxalbe23 Launcher — GTA VI Xbox CL Edition</title>
+  <style>
+    :root {
+      --bg-dark: #070b14;
+      --bg-card: #0e1424;
+      --bg-card-hover: #131b30;
+      --bg-input: #0a0f1c;
+      --border: rgba(148, 163, 184, 0.14);
+      --border-glow: rgba(56, 189, 248, 0.35);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --cyan: #38bdf8;
+      --purple: #8b5cf6;
+      --purple-hover: #7c3aed;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-effects {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.12), transparent 40%),
+        radial-gradient(circle at 80% 25%, rgba(139, 92, 246, 0.14), transparent 45%);
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: linear-gradient(to bottom, black 30%, transparent 90%);
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navbar */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(7, 11, 20, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .logo-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #60a5fa, #3b82f6, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 20px;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-account-btn {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: var(--cyan) !important;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+      cursor: pointer;
+    }
+
+    .nav-cta {
+      background: rgba(139, 92, 246, 0.16);
+      border: 1px solid rgba(139, 92, 246, 0.45);
+      color: #ddd6fe !important;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600 !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--purple);
+      color: #fff !important;
+    }
+
+    @media (max-width: 780px) {
+      .nav-links a.hide-mobile {
+        display: none;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 76px 0 56px;
+      text-align: center;
+    }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      color: var(--cyan);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      max-width: 820px;
+      margin: 0 auto 20px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      color: #fff;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(139, 92, 246, 0.55);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: #e2e8f0;
+      text-decoration: none;
+      padding: 16px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      transition: background 0.15s, border-color 0.15s;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .hero-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    #dlFeedback {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #34d399;
+      min-height: 22px;
+    }
+
+    /* Supabase Account & Key System Portal */
+    .portal-section {
+      margin: 24px auto 72px;
+    }
+
+    .portal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .portal-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+
+    .portal-title-group h2 {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .portal-title-group p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .supabase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 28px;
+    }
+
+    @media (max-width: 860px) {
+      .portal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .auth-box, .key-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      background: var(--bg-input);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 9px 12px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active {
+      background: var(--bg-card-hover);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 11px 14px;
+      border-radius: 9px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-input:focus {
+      border-color: var(--cyan);
+    }
+
+    .btn-full {
+      width: 100%;
+      background: var(--cyan);
+      color: #05101f;
+      border: none;
+      padding: 12px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: opacity 0.15s;
+    }
+
+    .btn-full:hover {
+      opacity: 0.9;
+    }
+
+    .btn-purple-full {
+      width: 100%;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-purple-full:hover {
+      background: var(--purple-hover);
+    }
+
+    .btn-danger-outline {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .key-display {
+      background: var(--bg-input);
+      border: 1px dashed rgba(56, 189, 248, 0.45);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .key-code {
+      font-family: Consolas, Monaco, monospace;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      word-break: break-all;
+    }
+
+    .btn-copy {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .key-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .meta-pill {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .meta-pill span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .meta-pill strong {
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .alert-msg {
+      margin-top: 12px;
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .alert-msg.show {
+      display: block;
+    }
+
+    .alert-ok {
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+
+    .alert-err {
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+    }
+
+    /* Sectiuni */
+    section.block {
+      padding: 56px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 44px;
+    }
+
+    .section-head h2 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    @media (max-width: 860px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-glow);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .builds-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 760px) {
+      .builds-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .build-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .build-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+    }
+
+    .badge-cyan {
+      background: rgba(56, 189, 248, 0.14);
+      color: var(--cyan);
+    }
+
+    .badge-purple {
+      background: rgba(139, 92, 246, 0.16);
+      color: #c4b5fd;
+    }
+
+    .build-card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .build-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .build-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+      color: #cbd5e1;
+    }
+
+    .build-list li::before {
+      content: "✓ ";
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 36px 24px;
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-effects"></div>
+  <div class="bg-grid"></div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="logo-badge">M</div>
+        <span>maxalbe23</span>
+      </a>
+      <div class="nav-links">
+        <a href="#portal" class="hide-mobile">Key System &amp; Cont</a>
+        <a href="#functii" class="hide-mobile">Funcționalități</a>
+        <a href="#builduri" class="hide-mobile">Builduri</a>
+        <a href="#portal" class="nav-account-btn" id="navUserBadge">Contul Meu</a>
+        <a href="#portal" class="nav-cta" data-dl>
+          Descarcă
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="pill-tag">
+        <span class="pill-dot"></span>
+        <span>GTA VI · XBOX CL EDITION · SUPABASE AUTH</span>
+      </div>
+
+      <h1>
+        Control total pentru buildurile <span class="gradient-text">GTA VI Xbox CL</span>
+      </h1>
+
+      <p>
+        Launcher oficial cu <strong>User Accounts</strong> și <strong>Key System</strong> integrat prin Supabase.
+        Creează-ți cont, generează cheia de acces și pornește buildurile Belobug sau VIctory NVIDIA.
+      </p>
+
+      <div class="hero-buttons">
+        <a id="mainDownloadBtn" href="#portal" class="btn-download" data-dl>
+          <span>⬇ Descarcă Installerul</span>
+        </a>
+        <a href="#portal" class="btn-secondary">
+          🔑 Obține Key &amp; Cont
+        </a>
+      </div>
+
+      <div class="hero-meta" id="releaseMeta">
+        Windows 10 / 11 (64-bit) · Descărcare directă · Protejat prin Supabase Key System
+      </div>
+      <div id="dlFeedback"></div>
+    </section>
+
+    <!-- Portal User Accounts & Key System (Supabase) -->
+    <section id="portal" class="portal-section">
+      <div class="portal-card">
+        <div class="portal-header">
+          <div class="portal-title-group">
+            <h2>User Account &amp; Launcher Key System</h2>
+            <p>Conectează-te sau creează un cont pentru a-ți gestiona cheia de acces și asocierea dispozitivului în maxalbe23 Launcher.</p>
+          </div>
+          <div class="supabase-badge">
+            <span class="pill-dot"></span>
+            <span id="supabaseStatusText">CONFIGURARE ÎN CURS</span>
+          </div>
+        </div>
+
+        <div class="portal-grid">
+          <!-- Coloana Stanga: Login / Register -->
+          <div class="auth-box">
+            <div id="authGuestView">
+              <div class="tabs">
+                <button type="button" class="tab-btn active" id="tabLogin">Autentificare</button>
+                <button type="button" class="tab-btn" id="tabRegister">Cont Nou</button>
+              </div>
+
+              <form id="authForm">
+                <div class="form-group" id="usernameGroup" style="display:none;">
+                  <label for="usernameInput">Nume utilizator (Launcher Tag)</label>
+                  <input type="text" id="usernameInput" class="form-input" placeholder="ex: maxalbe23" />
+                </div>
+
+                <div class="form-group">
+                  <label for="emailInput">Email</label>
+                  <input type="email" id="emailInput" class="form-input" placeholder="nume@exemplu.ro" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="passwordInput">Parolă</label>
+                  <input type="password" id="passwordInput" class="form-input" placeholder="Minim 6 caractere" required />
+                </div>
+
+                <button type="submit" class="btn-full" id="authSubmitBtn">Intră în cont</button>
+              </form>
+            </div>
+
+            <div id="authLoggedView" style="display:none;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+                <div>
+                  <div style="font-size:12px; color:var(--cyan); font-weight:700; text-transform:uppercase;">Cont activ</div>
+                  <div style="font-size:18px; font-weight:700;" id="loggedUserEmail">user@email.com</div>
+                </div>
+                <button type="button" class="btn-danger-outline" id="logoutBtn">Deconectare</button>
+              </div>
+              <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+                Contul tău este sincronizat cu baza de date Supabase. Folosește datele contului sau cheia din dreapta pentru a te loga în aplicația desktop.
+              </p>
+              <button type="button" class="btn-purple-full" id="resetHwidBtn">Resetează asocierea dispozitivului</button>
+            </div>
+
+            <div id="authAlert" class="alert-msg"></div>
+          </div>
+
+          <!-- Coloana Dreapta: Key Manager -->
+          <div class="key-box">
+            <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--cyan); margin-bottom:6px;">
+              LICENȚĂ &amp; ACCES LAUNCHER
+            </div>
+            <h3 style="font-size:20px; margin-bottom:8px;">Cheia ta de acces</h3>
+            <p style="font-size:13px; color:var(--text-muted);">
+              Fiecare cont primește o cheie unică verificată automat la pornirea <strong>maxalbe23 Launcher</strong>.
+            </p>
+
+            <div class="key-display">
+              <span class="key-code" id="userKeyDisplay">AUTENTIFICĂ-TE PENTRU KEY</span>
+              <button type="button" class="btn-copy" id="copyKeyBtn">Copiază</button>
+            </div>
+
+            <button type="button" class="btn-purple-full" id="generateKeyBtn">
+              🔑 Generează / Reînnoiește Cheia
+            </button>
+
+            <div class="key-meta-grid">
+              <div class="meta-pill">
+                <span>Status Cheie</span>
+                <strong id="keyStatusVal">Neautentificat</strong>
+              </div>
+              <div class="meta-pill">
+                <span>Dispozitiv asociat</span>
+                <strong id="hwidStatusVal">Neasociat</strong>
+              </div>
+            </div>
+
+            <div id="keyAlert" class="alert-msg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Functionalitati -->
+    <section id="functii" class="block">
+      <div class="section-head">
+        <h2>Funcționalități principale</h2>
+        <p>Tot ce ai nevoie pentru a porni și configura rapid buildurile GTA VI Xbox CL.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3>Conturi &amp; Key System Supabase</h3>
+          <p>Autentificare securizată, chei asociate pe cont și blocarea instalării printr-un ID aleator, nu prin scanarea componentelor PC-ului.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Pregătire automată a shaderelor</h3>
+          <p>Generează și verifică cache-ul de shadere înainte de pornire pentru a reduce blocajele din timpul jocului.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎛️</div>
+          <h3>Profiluri grafice Series S</h3>
+          <p>Comută rapid între <strong>FPS prioritar (540p)</strong> și <strong>Imagine mai clară (720p)</strong>, plus patchuri experimentale.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Builduri -->
+    <section id="builduri" class="block">
+      <div class="section-head">
+        <h2>Builduri suportate</h2>
+        <p>Schimbă instant între cele două versiuni principale ale ediției Xbox CL.</p>
+      </div>
+
+      <div class="builds-grid">
+        <div class="build-card">
+          <span class="build-badge badge-cyan">Recomandat · Versiunea recentă</span>
+          <h3>Belobug</h3>
+          <p>Versiunea actualizată pentru GTA VI Xbox CL Edition, optimizată pentru rulare rapidă cu profilurile de performanță Series S.</p>
+          <ul class="build-list">
+            <li>Suport pentru randare 540p și 720p</li>
+            <li>Activare/dezactivare patchuri experimentale</li>
+            <li>Gestionare directă a folderului de cache</li>
+          </ul>
+        </div>
+
+        <div class="build-card">
+          <span class="build-badge badge-purple">Build de rezervă</span>
+          <h3>VIctory NVIDIA</h3>
+          <p>Configurație alternativă creată pentru stabilitate sporită și compatibilitate pe sisteme echipate cu plăci grafice NVIDIA.</p>
+          <ul class="build-list">
+            <li>Fallback sigur dacă buildul principal întâmpină erori</li>
+            <li>Profiluri orientative adaptate pentru VRAM</li>
+            <li>Lansare curată cu log-uri în timp real</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>maxalbe23 Launcher</strong> · Dezvoltat de Time2PlayRO · Powered by Supabase &amp; Vercel</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./auth.js"></script>
+</body>
+</html>

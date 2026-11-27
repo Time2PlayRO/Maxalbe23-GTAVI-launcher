@@ -1,0 +1,10 @@
+project_id = "bkvsimqhmalrkudxnxbz"
+
+[functions.launcher-account]
+verify_jwt = false
+
+[functions.verify-launcher]
+verify_jwt = false
+
+[functions.create-download]
+verify_jwt = false
